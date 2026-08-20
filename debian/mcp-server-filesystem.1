@@ -1,0 +1,60 @@
+.TH MCP-SERVER-FILESYSTEM 1 "August 2026" "mcp-server-filesystem" "User Commands"
+.SH NAME
+mcp-server-filesystem \- MCP server exposing Linux filesystem operations
+.SH SYNOPSIS
+.B mcp-server-filesystem
+.SH DESCRIPTION
+.B mcp-server-filesystem
+is a Model Context Protocol (MCP) server that exposes Linux filesystem
+operations as tools for an LLM agent.
+It communicates over stdio using the MCP protocol and is intended to be
+launched by an MCP client (e.g. Claude Code, Claude Desktop, mcprack, or
+any other MCP-compatible agent runtime), not run interactively.
+.PP
+It is built on
+.BR fastmcp .
+.SH TOOLS
+.SS Read-only
+.TP
+.B list_dir(path=".")
+List the contents of a directory.
+.TP
+.B read_file(path, encoding="utf-8", binary=False, max_bytes=1048576)
+Read a file's contents.
+.TP
+.B stat(path)
+Fetch filesystem metadata for a path.
+.TP
+.B exists(path)
+Check whether a path exists.
+.TP
+.B glob_search(pattern, path=".")
+Search for files matching a glob pattern.
+.SS Mutating (require FS_READONLY=false)
+.TP
+.B write_file(path, content, encoding="utf-8", append=False)
+Write text content to a file.
+.TP
+.B mkdir(path, parents=True, exist_ok=True)
+Create a directory.
+.TP
+.B delete(path, recursive=False)
+Delete a file or directory.
+.TP
+.B move(src, dst)
+Move/rename a file or directory.
+.TP
+.B copy(src, dst, recursive=False)
+Copy a file or directory.
+.SH ENVIRONMENT
+.TP
+.B FS_ROOT
+Directory all paths are confined to (default: current working directory).
+.TP
+.B FS_READONLY
+.B true
+(default) blocks mutating tools;
+.B false
+allows writes/deletes/moves.
+.SH AUTHOR
+Vítězslav Dvořák <info@vitexsoftware.cz>

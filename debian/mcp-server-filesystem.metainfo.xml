@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>cz.vitexsoftware.mcp-server-filesystem</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>mcp-server-filesystem</name>
+  <summary>MCP server exposing Linux filesystem operations</summary>
+  <description>
+    <p>
+      An MCP (Model Context Protocol) server exposing Linux filesystem
+      operations as tools for an LLM agent, built on fastmcp.
+    </p>
+    <p>
+      Tools cover directory listing, file reading, stat, existence checks,
+      and glob search, read-only by default, plus file writes, mkdir,
+      delete, move, and copy, gated behind FS_READONLY=false. All paths
+      are confined to FS_ROOT, read once from the environment at startup.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/VitexSoftware/mcp-server-filesystem</url>
+  <icon type="stock">mcp-server-filesystem</icon>
+  <provides>
+    <binary>mcp-server-filesystem</binary>
+  </provides>
+</component>

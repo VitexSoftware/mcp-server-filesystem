@@ -1,0 +1,35 @@
+Source: mcp-server-filesystem
+Section: python
+Priority: optional
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Build-Depends:
+ appstream,
+ debhelper-compat (= 13),
+ dh-python,
+ pybuild-plugin-pyproject,
+ python3-all,
+ python3-build,
+ python3-fastmcp,
+ python3-setuptools,
+ python3-wheel,
+Standards-Version: 4.7.0
+Homepage: https://github.com/VitexSoftware/mcp-server-filesystem
+Vcs-Git: https://github.com/VitexSoftware/mcp-server-filesystem.git
+Vcs-Browser: https://github.com/VitexSoftware/mcp-server-filesystem
+Rules-Requires-Root: no
+
+Package: mcp-server-filesystem
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ python3-fastmcp,
+ ${misc:Depends},
+ ${python3:Depends},
+Description: MCP server exposing Linux filesystem operations
+ An MCP (Model Context Protocol) server exposing Linux filesystem
+ operations as tools for an LLM agent, built on fastmcp.
+ .
+ Tools cover directory listing, file reading, stat, existence checks,
+ and glob search (all read-only by default), plus file writes, mkdir,
+ delete, move, and copy, gated behind FS_READONLY=false. All paths are
+ confined to FS_ROOT, read once from the environment at startup.

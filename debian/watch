@@ -1,0 +1,3 @@
+version=4
+opts=filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/mcp-server-filesystem-$1\.tar\.gz/ \
+  https://github.com/VitexSoftware/mcp-server-filesystem/tags .*/v?(\d\S+)\.tar\.gz

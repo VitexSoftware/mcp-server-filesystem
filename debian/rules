@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_test:
+	appstreamcli validate --no-net debian/mcp-server-filesystem.metainfo.xml
+	# Skip pybuild's default unittest discovery: tests/test_server.py uses
+	# pytest, which isn't packaged as a build-dependency here.
+
+override_dh_install:
+	dh_install
+	install -D -m644 debian/mcp-server-filesystem.metainfo.xml \
+		debian/mcp-server-filesystem/usr/share/metainfo/cz.vitexsoftware.mcp-server-filesystem.metainfo.xml
+	install -D -m644 debian/mcp-server-filesystem.svg \
+		debian/mcp-server-filesystem/usr/share/icons/hicolor/scalable/apps/mcp-server-filesystem.svg

@@ -30,6 +30,26 @@ Mutating (require `FS_READONLY=false`): `write_file`, `mkdir`, `delete`,
 
 ## Usage
 
+### Recommended — Debian package from VitexSoftware repository
+
+```bash
+sudo curl -fsSL http://repo.vitexsoftware.com/KEY.gpg -o /usr/share/keyrings/vitexsoftware-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/vitexsoftware-archive-keyring.gpg] http://repo.vitexsoftware.com trixie main backports" \
+  | sudo tee /etc/apt/sources.list.d/vitexsoftware.list
+sudo apt update
+sudo apt install mcp-server-filesystem
+```
+
+The `backports` component is required, not optional: `python3-mcp` (a
+`python3-fastmcp` dependency) needs `python3-jsonschema >= 4.20.0`, which is
+newer than the version Debian trixie ships in `main` — it's only available
+in `backports`. Without it, `apt install` fails with an unmet-dependency
+error on `python3-jsonschema`.
+
+This installs `python3-fastmcp` and `mcp-server-filesystem` in a single step.
+
+### Alternative — pip
+
 ```sh
 pip install -e .
 export FS_ROOT=/path/to/sandbox

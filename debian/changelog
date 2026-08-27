@@ -1,3 +1,11 @@
+mcp-server-filesystem (0.1.1) unstable; urgency=medium
+
+  * Add companion package mcprack-mcp-server-filesystem: registers mcp-
+    server-filesystem into the local mcprack MCP catalog on install
+    (postinst) and unregisters it on removal (prerm).
+
+ -- vitex <info@vitexsoftware.cz>  Thu, 27 Aug 2026 15:48:57 +0200
+
 mcp-server-filesystem (0.1.0) unstable; urgency=medium
 
   * Initial release.

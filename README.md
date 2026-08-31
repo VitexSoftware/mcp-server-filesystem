@@ -70,3 +70,7 @@ mcprack spawns it as a stdio subprocess and proxies it over HTTP per user.
 ```sh
 pytest
 ```
+
+## License
+
+MIT — see [LICENSE](LICENSE).

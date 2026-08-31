@@ -58,7 +58,14 @@ def _resolve(path: str) -> Path:
 # --------------------------------------------------------------------------
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def list_dir(path: str = ".") -> list[dict[str, Any]]:
     """List the contents of a directory (name, is_dir, size, mtime)."""
     target = _resolve(path)
@@ -76,7 +83,14 @@ def list_dir(path: str = ".") -> list[dict[str, Any]]:
     return entries
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def read_file(
     path: str,
     encoding: str = "utf-8",
@@ -96,7 +110,14 @@ def read_file(
     return data.decode(encoding, errors="replace")
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def stat(path: str) -> dict[str, Any]:
     """Fetch filesystem metadata for a path."""
     target = _resolve(path)
@@ -111,13 +132,27 @@ def stat(path: str) -> dict[str, Any]:
     }
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def exists(path: str) -> bool:
     """Check whether a path exists."""
     return _resolve(path).exists()
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def glob_search(pattern: str, path: str = ".") -> list[str]:
     """Search for files matching a glob pattern (e.g. ``**/*.py``) under path."""
     target = _resolve(path)
@@ -130,7 +165,14 @@ def glob_search(pattern: str, path: str = ".") -> list[str]:
 # --------------------------------------------------------------------------
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    }
+)
 def write_file(path: str, content: str, encoding: str = "utf-8", append: bool = False) -> dict[str, Any]:
     """Write text content to a file. Requires FS_READONLY=false."""
     _require_writable()
@@ -141,7 +183,14 @@ def write_file(path: str, content: str, encoding: str = "utf-8", append: bool = 
     return {"path": str(target.relative_to(_root())), "bytes_written": written}
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def mkdir(path: str, parents: bool = True, exist_ok: bool = True) -> dict[str, Any]:
     """Create a directory. Requires FS_READONLY=false."""
     _require_writable()
@@ -150,7 +199,14 @@ def mkdir(path: str, parents: bool = True, exist_ok: bool = True) -> dict[str, A
     return {"path": str(target.relative_to(_root()))}
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": False,
+        "destructiveHint": True,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    }
+)
 def delete(path: str, recursive: bool = False) -> dict[str, Any]:
     """Delete a file, or a directory if recursive=True. Requires FS_READONLY=false."""
     _require_writable()
@@ -165,7 +221,14 @@ def delete(path: str, recursive: bool = False) -> dict[str, Any]:
     return {"path": str(target.relative_to(_root()))}
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": False,
+        "destructiveHint": True,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    }
+)
 def move(src: str, dst: str) -> dict[str, Any]:
     """Move/rename a file or directory. Requires FS_READONLY=false."""
     _require_writable()
@@ -175,7 +238,14 @@ def move(src: str, dst: str) -> dict[str, Any]:
     return {"src": str(source.relative_to(_root())), "dst": str(dest.relative_to(_root()))}
 
 
-@mcp.tool
+@mcp.tool(
+    annotations={
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    }
+)
 def copy(src: str, dst: str, recursive: bool = False) -> dict[str, Any]:
     """Copy a file, or a directory if recursive=True. Requires FS_READONLY=false."""
     _require_writable()

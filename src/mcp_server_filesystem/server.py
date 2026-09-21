@@ -25,7 +25,9 @@ mcp = FastMCP("Filesystem")
 
 
 def _readonly() -> bool:
-    return os.environ.get("FS_READONLY", "true") not in ("0", "false", "False", "")
+    """Fail-closed: unset or empty → read-only. Only explicit falsey values enable writes."""
+    val = os.environ.get("FS_READONLY", "true").strip().lower()
+    return val not in ("0", "false", "no")
 
 
 def _require_writable() -> None:
@@ -60,10 +62,10 @@ def _resolve(path: str) -> Path:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": True,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": True,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def list_dir(path: str = ".") -> list[dict[str, Any]]:
@@ -85,10 +87,10 @@ def list_dir(path: str = ".") -> list[dict[str, Any]]:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": True,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": True,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def read_file(
@@ -112,10 +114,10 @@ def read_file(
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": True,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": True,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def stat(path: str) -> dict[str, Any]:
@@ -134,10 +136,10 @@ def stat(path: str) -> dict[str, Any]:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": True,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": True,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def exists(path: str) -> bool:
@@ -147,10 +149,10 @@ def exists(path: str) -> bool:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": True,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": True,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def glob_search(pattern: str, path: str = ".") -> list[str]:
@@ -167,10 +169,10 @@ def glob_search(pattern: str, path: str = ".") -> list[str]:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": False,
-        "destructiveHint": False,
-        "idempotentHint": False,
-        "openWorldHint": False,
+        "read_only_hint": False,
+        "destructive_hint": False,
+        "idempotent_hint": False,
+        "open_world_hint": False,
     }
 )
 def write_file(path: str, content: str, encoding: str = "utf-8", append: bool = False) -> dict[str, Any]:
@@ -185,10 +187,10 @@ def write_file(path: str, content: str, encoding: str = "utf-8", append: bool = 
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": False,
-        "destructiveHint": False,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": False,
+        "destructive_hint": False,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def mkdir(path: str, parents: bool = True, exist_ok: bool = True) -> dict[str, Any]:
@@ -201,10 +203,10 @@ def mkdir(path: str, parents: bool = True, exist_ok: bool = True) -> dict[str, A
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": False,
-        "destructiveHint": True,
-        "idempotentHint": True,
-        "openWorldHint": False,
+        "read_only_hint": False,
+        "destructive_hint": True,
+        "idempotent_hint": True,
+        "open_world_hint": False,
     }
 )
 def delete(path: str, recursive: bool = False) -> dict[str, Any]:
@@ -223,10 +225,10 @@ def delete(path: str, recursive: bool = False) -> dict[str, Any]:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": False,
-        "destructiveHint": True,
-        "idempotentHint": False,
-        "openWorldHint": False,
+        "read_only_hint": False,
+        "destructive_hint": True,
+        "idempotent_hint": False,
+        "open_world_hint": False,
     }
 )
 def move(src: str, dst: str) -> dict[str, Any]:
@@ -240,10 +242,10 @@ def move(src: str, dst: str) -> dict[str, Any]:
 
 @mcp.tool(
     annotations={
-        "readOnlyHint": False,
-        "destructiveHint": False,
-        "idempotentHint": False,
-        "openWorldHint": False,
+        "read_only_hint": False,
+        "destructive_hint": False,
+        "idempotent_hint": False,
+        "open_world_hint": False,
     }
 )
 def copy(src: str, dst: str, recursive: bool = False) -> dict[str, Any]:

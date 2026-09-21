@@ -40,6 +40,17 @@ def test_readonly_by_default(monkeypatch: pytest.MonkeyPatch, tmp_path) -> None:
         delete("foo.txt")
 
 
+def test_empty_fs_readonly_is_fail_closed(monkeypatch: pytest.MonkeyPatch, tmp_path) -> None:
+    """FS_READONLY= (empty) must remain read-only, not accidentally enable writes."""
+    monkeypatch.setenv("FS_ROOT", str(tmp_path))
+    monkeypatch.setenv("FS_READONLY", "")
+    from mcp_server_filesystem import server
+
+    server._root.cache_clear()
+    with pytest.raises(RuntimeError, match="read-only"):
+        write_file("foo.txt", "hello")
+
+
 def test_readonly_guard_disabled(monkeypatch: pytest.MonkeyPatch, tmp_path) -> None:
     monkeypatch.setenv("FS_ROOT", str(tmp_path))
     monkeypatch.setenv("FS_READONLY", "false")

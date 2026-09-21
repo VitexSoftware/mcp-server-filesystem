@@ -15,7 +15,7 @@ read once at startup:
 | Variable | Required | Description |
 |---|---|---|
 | `FS_ROOT` | no | Directory all paths are confined to (default: current working directory at startup) |
-| `FS_READONLY` | no | `true` (default) blocks mutating tools; set to `false` to allow writes/deletes/moves |
+| `FS_READONLY` | no | `true` (default) blocks mutating tools; set to `false` to allow writes/deletes/moves. Empty/unset values are treated as read-only (fail-closed). |
 
 All paths given to tools are resolved against `FS_ROOT` and rejected if they
 would escape it (via `..` or a symlink). This is an application-level
@@ -69,7 +69,13 @@ mcprack spawns it as a stdio subprocess and proxies it over HTTP per user.
 
 ```sh
 pytest
+python tests/live_capability_scenario.py              # temp sandbox, FS_READONLY=true
+python tests/live_capability_scenario.py --allow-writes  # also exercise mutations
 ```
+
+The live scenario creates a temporary `FS_ROOT`, exercises every read tool,
+verifies path-escape rejection, and confirms mutating tools refuse under
+read-only mode. No credentials required.
 
 ## License
 

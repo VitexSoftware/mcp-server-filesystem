@@ -1,3 +1,11 @@
+mcp-server-filesystem (0.1.2) unstable; urgency=medium
+
+  * Fail-closed FS_READONLY: empty/unset values stay read-only
+  * Tool annotations use MCP SDK v2 snake_case hints (read_only_hint)
+  * Add tests/live_capability_scenario.py (temp sandbox, no credentials)
+
+ -- Vítězslav Dvořák <info@vitexsoftware.cz>  Mon, 21 Sep 2026 11:31:28 +0200
+
 mcp-server-filesystem (0.1.1) unstable; urgency=medium
 
   * Add companion package mcprack-mcp-server-filesystem: registers mcp-

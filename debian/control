@@ -38,7 +38,7 @@ Package: mcprack-mcp-server-filesystem
 Architecture: all
 Depends:
  ${misc:Depends},
- mcprack (>= 1.5.1),
+ mcprack (>= 1.6.0),
  mcp-server-filesystem (= ${binary:Version}),
 Description: Registers Filesystem MCP server into mcprack catalog
  Companion package for mcp-server-filesystem. Installing it registers
